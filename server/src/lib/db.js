@@ -4,6 +4,9 @@ import mongoose from 'mongoose'
 
  export let connectDB =async()=>{
   try{
+    if(!ENV.DB_URL){
+      throw new Error("DB_url in not defined in the Env file")
+    }
     let con=await mongoose.connect(ENV.DB_URL)//this retirns a connection object
     console.log(`connected to DB ${con.connection.host}`)
   }catch(error){
