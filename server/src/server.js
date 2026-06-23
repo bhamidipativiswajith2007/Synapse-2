@@ -3,6 +3,7 @@ import express from "express"
 // dotenv.config();//to accese the env file
 import path from 'path'
 import {ENV} from './lib/env.js'
+import {connectDB} from './lib/db.js'
 
 let app=express();
 
@@ -21,4 +22,14 @@ if(ENV.NODE_ENV === "production"){
   })
 }
 
-app.listen(3000,()=>console.log(`server ruuning on port 3000 ${ENV.PORT}`))
+
+//good way to start the server andd connecting the dbs
+let startserver=async()=>{
+try {
+  await connectDB();
+app.listen(3000,()=>{
+  console.log(`server ruuning on port 3000 ${ENV.PORT}`)})
+} catch (error) {
+console.log('error in connecting the server')}
+}
+startserver();
