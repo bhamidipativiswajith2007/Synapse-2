@@ -11,6 +11,10 @@ let __dirname=path.resolve()
 app.get('/health',(re,res)=>{
 res.status(200).json({msg:"apii is healthy "})
 })
+console.log(null);
+console.log(null);
+console.log(null);
+console.log(null);
 
 //if app is ready for deploymrent
 if(ENV.NODE_ENV === "production"){
