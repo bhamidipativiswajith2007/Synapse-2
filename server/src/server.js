@@ -36,7 +36,7 @@ if(ENV.NODE_ENV === "production"){
 let startserver=async()=>{
 try {
   await connectDB();
-app.listen(3000,()=>{
+app.listen(ENV.PORT||3000,()=>{
   console.log(`server ruuning on port 3000 ${ENV.PORT}`)})
 } catch (error) {
 console.log('error in connecting the server')}
