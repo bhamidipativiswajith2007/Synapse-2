@@ -7,7 +7,6 @@ import { SignInButton,SignedIn,SignedOut, SignOutButton, UserButton } from '@cle
 
 function App() {
   const [count, setCount] = useState(0)
-
   return (
     <>
       <h1>welcomr to the app </h1>
