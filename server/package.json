@@ -8,11 +8,13 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server",
-    "start":"node src/server"
+    "start": "node src/server"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "inngest": "^4.9.0",
     "mongoose": "^9.7.2"
   },
   "devDependencies": {
