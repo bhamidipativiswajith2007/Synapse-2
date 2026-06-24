@@ -27,7 +27,7 @@ let syncUser=inngest.createFunction(
     await User.create(newUser)
     //create the user in stream 
     await upsertStreamUser({
-      id:newUser.clerkId.tostring(),
+      id:newUser.clerkId.toString(),
       name:newUser.name,
       img:newUser.profileImage
     })
@@ -45,7 +45,7 @@ let deleteUser=inngest.createFunction(
     const {id}=event.data  
     await User.deleteOne({clerkId:id})
     //delete the usrr in stream
-    await deleteStreamUser(id.tostring())
+    await deleteStreamUser(id.toString())
   }
 )
 
