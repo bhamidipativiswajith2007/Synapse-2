@@ -1,29 +1,29 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-let userschema=new mongoose.Schema({
-  name:{
-    type:String ,
-    required:true,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    profileImage: {
+      type: String,
+      default: "",
+    },
+    clerkId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
-  email:{
-    type:String ,
-    required:true,
-    unique:true,
-  },
-  profileImage:{
-    type:String,
-    default:"",
-  },
-  clerkId:{
-    type:String,
-    required:true,
-    unique:true,
-  }//ref for the storage of the clerk acc created
-},{timestamps:true,})//this adds the created time ,updated time of the acc..
-//using the timestamp we can say this user is memeber since ...
+  { timestamps: true } // createdAt, updatedAt
+);
 
-
-//creating a user model
-let User=mongoose.model("User",userschema)
+const User = mongoose.model("User", userSchema);
 
 export default User;

@@ -1,16 +1,16 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
- import {ENV} from './env.js'
+import { ENV } from "./env.js";
 
- export let connectDB =async()=>{
-  try{
-    if(!ENV.DB_URL){
-      throw new Error("DB_url in not defined in the Env file")
+export const connectDB = async () => {
+  try {
+    if (!ENV.DB_URL) {
+      throw new Error("DB_URL is not defined in environment variables");
     }
-    let con=await mongoose.connect(ENV.DB_URL)//this retirns a connection object
-    console.log(`connected to DB ${con.connection.host}`)
-  }catch(error){
-    console.log("error in db",error)
-    process.exit(1);//this will stop the node js server immediatley
+    const conn = await mongoose.connect(ENV.DB_URL);
+    console.log("✅ Connected to MongoDB:", conn.connection.host);
+  } catch (error) {
+    console.error("❌ Error connecting to MongoDB", error);
+    process.exit(1); // 0 means success, 1 means failure
   }
- }
+};
