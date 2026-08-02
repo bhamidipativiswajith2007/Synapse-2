@@ -115,7 +115,7 @@ You need to configure env variables for both client and server before launching.
 Create a `.env` file under the `/client` directory:
 ```env
 # Clerk identity keys
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+VITE_CLERK_PUBLISHABLE_KEY=_clerk_publishable_key
 
 # Backend API server endpoint
 VITE_API_URL=http://localhost:3000/api
@@ -129,12 +129,12 @@ DB_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/synapse_DB
 NODE_ENV=development
 
 # Inngest Background Runner Secrets
-INNGEST_EVENT_KEY=your_inngest_event_key
-INNGEST_SIGNING_KEY=your_inngest_signing_key
+INNGEST_EVENT_KEY=_inngest_event_key
+INNGEST_SIGNING_KEY=_inngest_signing_key
 
 # Clerk Auth Secrets
-CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
+CLERK_PUBLISHABLE_KEY=_clerk_publishable_key
+CLERK_SECRET_KEY=_clerk_secret_key
 
 # Client Application URL
 CLIENT_URL=http://localhost:5173
