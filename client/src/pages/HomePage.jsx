@@ -9,6 +9,7 @@ import {
   ZapIcon,
 } from "lucide-react";
 import { SignInButton } from "@clerk/clerk-react";
+import heroImg from "../assets/hero.png";
 
 function HomePage() {
   return (
@@ -116,7 +117,7 @@ function HomePage() {
 
           {/* RIGHT IMAGE */}
           <img
-            src="/hero.png"
+            src={heroImg}
             alt="CodeCollab Platform"
             className="w-full h-auto rounded-3xl shadow-2xl border-4 border-base-100 hover:scale-105 transition-transform duration-500"
           />

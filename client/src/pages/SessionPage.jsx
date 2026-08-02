@@ -31,6 +31,10 @@ function SessionPage() {
   const isParticipant = session?.participant?.clerkId === user?.id;
 
   const [socket, setSocket] = useState(null);
+  
+  // isSynced keeps track of whether the editor has successfully loaded a cached code snapshot
+  // from Redis. This is crucial for avoiding race conditions during initial load.
+  const [isSynced, setIsSynced] = useState(false);
 
   // Set up socket for code editor collaboration
   useEffect(() => {
@@ -54,6 +58,18 @@ function SessionPage() {
       setSelectedLanguage(incoming.language);
       if (incoming.starterCode) {
         setCode(incoming.starterCode);
+      }
+    });
+
+    // Triggered when joining the room. If the server has a cached code snapshot in Redis,
+    // we sync it to the editor immediately and mark isSynced = true to prevent it from being overwritten.
+    newSocket.on("sync-code-state", (incoming) => {
+      if (incoming.code !== null && incoming.code !== undefined) {
+        if (incoming.language) {
+          setSelectedLanguage(incoming.language);
+        }
+        setCode(incoming.code);
+        setIsSynced(true);
       }
     });
 
@@ -87,12 +103,16 @@ function SessionPage() {
     if (session.status === "completed") navigate("/dashboard");
   }, [session, loadingSession, navigate]);
 
-  // update code when problem loads or changes
+  // Initialize the editor with the problem's default starter code.
+  // We skip this step if we already synchronized a cached code snapshot from Redis (isSynced === true),
+  // which prevents a race condition where the database load overwrites active socket edits.
   useEffect(() => {
+    if (isSynced) return;
+
     if (problemData?.starterCode?.[selectedLanguage]) {
       setCode(problemData.starterCode[selectedLanguage]);
     }
-  }, [problemData, selectedLanguage]);
+  }, [problemData, selectedLanguage, isSynced]);
 
   const handleLanguageChange = (e) => {
     const newLang = e.target.value;

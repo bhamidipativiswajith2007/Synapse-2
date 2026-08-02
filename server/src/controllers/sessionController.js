@@ -17,23 +17,6 @@ export async function createSession(req, res) {
     // create session in db
     const session = await Session.create({ problem, difficulty, host: userId, callId });
 
-    // create stream video call
-    // await streamClient.video.call("default", callId).getOrCreate({
-    //   data: {
-    //     created_by_id: clerkId,
-    //     custom: { problem, difficulty, sessionId: session._id.toString() },
-    //   },
-    // });
-
-    // chat messaging
-    // const channel = chatClient.channel("messaging", callId, {
-    //   name: `${problem} Session`,
-    //   created_by_id: clerkId,
-    //   members: [clerkId],
-    // });
-
-    // await channel.create();
-
     res.status(201).json({ session });
   } catch (error) {
     console.log("Error in createSession controller:", error.message);
@@ -145,13 +128,18 @@ export async function endSession(req, res) {
       return res.status(400).json({ message: "Session is already completed" });
     }
 
-    // delete stream video call
-    // const call = streamClient.video.call("default", session.callId);
-    // await call.delete({ hard: true });
 
-    // delete stream chat channel
-    // const channel = chatClient.channel("messaging", session.callId);
-    // await channel.delete();
+    // Clear cached session state in Redis
+    const { getRedisClient } = await import("../lib/redis.js");
+    const redisClient = getRedisClient();
+    if (redisClient) {
+      try {
+        await redisClient.del(`session:${id}:code`);
+        await redisClient.del(`session:${id}:language`);
+      } catch (error) {
+        console.error("❌ Error clearing session cache from Redis:", error.message);
+      }
+    }
 
     session.status = "completed";
     await session.save();

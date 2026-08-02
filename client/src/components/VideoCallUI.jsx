@@ -338,7 +338,7 @@ function VideoCallUI({ session }) {
                   <div key={idx} className={`chat ${isMe ? "chat-end" : "chat-start"}`}>
                     <div className="chat-image avatar">
                       <div className="w-8 rounded-full">
-                        <img src={msg.senderImage || "/default-avatar.png"} alt={msg.senderName} />
+                        <img src={msg.senderImage || "https://avatar.iran.liara.run/public"} alt={msg.senderName} />
                       </div>
                     </div>
                     <div className="chat-header text-xs text-gray-400 mb-1">
