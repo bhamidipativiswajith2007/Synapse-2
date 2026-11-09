@@ -107,43 +107,6 @@ graph TD
 
 ---
 
-## ⚙️ Configuration & Environment Variables
-
-You need to configure env variables for both client and server before launching.
-
-### Client Environment Variables
-Create a `.env` file under the `/client` directory:
-```env
-# Clerk identity keys
-VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-
-# Backend API server endpoint
-VITE_API_URL=http://localhost:3000/api
-```
-
-### Server Environment Variables
-Create a `.env` file under the `/server` directory:
-```env
-PORT=3000
-DB_URL=mongodb+srv://<username>:<password>@cluster.mongodb.net/synapse_DB
-NODE_ENV=development
-
-# Inngest Background Runner Secrets
-INNGEST_EVENT_KEY=your_inngest_event_key
-INNGEST_SIGNING_KEY=your_inngest_signing_key
-
-# Clerk Auth Secrets
-CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
-
-# Client Application URL
-CLIENT_URL=http://localhost:5173
-
-# Redis URI (Defaults to localhost if omitted)
-REDIS_URL=redis://localhost:6379
-```
-
----
 
 ## 🚀 Installation & Local Development
 
@@ -205,3 +168,6 @@ Now open your browser and navigate to `http://localhost:5173`.
 * **Cached Room Buffers**: Using Redis prevents data loss on client browser reloads, reducing Mongo writes during keystroke bursts.
 * **WebRTC ICE Candidates**: Standard STUN/TURN protocols are used to ensure firewall traversal for P2P video stream synchronization.
 * **Database Populates**: Query populates are restricted only to necessary profile data (`name`, `profileImage`, `clerkId`) preventing email exposure.
+
+## 🛡️Patent
+By Viswajith Bhamidipati.
