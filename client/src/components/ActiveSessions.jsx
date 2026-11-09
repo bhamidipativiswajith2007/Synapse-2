@@ -10,7 +10,9 @@ import {
 import { Link } from "react-router";
 import { getDifficultyBadgeClass } from "../lib/utils";
 
-function ActiveSessions({ sessions, isLoading, isUserInSession }) {
+function ActiveSessions({ sessions, isLoading, isUserInSession, liveCount }) {
+  const currentLiveCount = liveCount !== undefined ? liveCount : sessions.filter(s => s.isLive).length;
+
   return (
     <div className="lg:col-span-2 card bg-base-100 border-2 border-primary/20 hover:border-primary/30 h-full">
       <div className="card-body">
@@ -25,8 +27,10 @@ function ActiveSessions({ sessions, isLoading, isUserInSession }) {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="size-2 bg-success rounded-full" />
-            <span className="text-sm font-medium text-success">{sessions.length} active</span>
+            <div className={`size-2 rounded-full ${currentLiveCount > 0 ? "bg-success" : "bg-base-content/30"}`} />
+            <span className={`text-sm font-medium ${currentLiveCount > 0 ? "text-success" : "text-base-content/60"}`}>
+              {currentLiveCount} active
+            </span>
           </div>
         </div>
 
@@ -47,7 +51,11 @@ function ActiveSessions({ sessions, isLoading, isUserInSession }) {
                   <div className="flex items-center gap-4 flex-1">
                     <div className="relative size-14 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                       <Code2Icon className="size-7 text-white" />
-                      <div className="absolute -top-1 -right-1 size-4 bg-success rounded-full border-2 border-base-100" />
+                      <div
+                        className={`absolute -top-1 -right-1 size-4 rounded-full border-2 border-base-100 ${
+                          session.isLive ? "bg-success animate-pulse" : "bg-base-content/30"
+                        }`}
+                      />
                     </div>
 
                     <div className="flex-1 min-w-0">
@@ -70,12 +78,17 @@ function ActiveSessions({ sessions, isLoading, isUserInSession }) {
                         </div>
                         <div className="flex items-center gap-1.5">
                           <UsersIcon className="size-4" />
-                          <span className="text-xs">{session.participant ? "2/2" : "1/2"}</span>
+                          <span className="text-xs">{session.isLive ? `${session.liveUsersCount || 1}/2` : "0/2"}</span>
                         </div>
+                        {session.isLive ? (
+                          <span className="badge badge-success badge-sm">LIVE</span>
+                        ) : (
+                          <span className="badge badge-ghost badge-sm">CALL ENDED</span>
+                        )}
                         {session.participant && !isUserInSession(session) ? (
                           <span className="badge badge-error badge-sm">FULL</span>
                         ) : (
-                          <span className="badge badge-success badge-sm">OPEN</span>
+                          <span className="badge badge-outline badge-sm">OPEN</span>
                         )}
                       </div>
                     </div>

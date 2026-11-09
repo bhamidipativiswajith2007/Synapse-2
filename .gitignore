@@ -1,2 +1,5 @@
 node_modules
 .env
+brag-output
+skills-lock.json
+.agents

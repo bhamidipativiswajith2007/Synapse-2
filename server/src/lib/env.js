@@ -12,4 +12,5 @@ export const ENV = {
   STREAM_API_KEY: process.env.STREAM_API_KEY,
   STREAM_API_SECRET: process.env.STREAM_API_SECRET,
   REDIS_URL: process.env.REDIS_URL || "redis://localhost:6379",
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
 };

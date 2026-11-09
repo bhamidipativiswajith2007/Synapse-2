@@ -1,0 +1,11 @@
+config:
+  target: "http://localhost:3000"
+
+  phases:
+    - duration: 10
+      arrivalRate: 1
+
+scenarios:
+  - flow:
+      - get:
+          url: "/health"

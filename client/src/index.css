@@ -3,6 +3,23 @@
   themes: all;
 }
 
+:root,
+[data-theme],
+[data-theme="light"] {
+  --color-primary: #7c3aed;
+  --color-primary-content: #ffffff;
+  --color-secondary: #9333ea;
+  --color-secondary-content: #ffffff;
+  --color-accent: #a855f7;
+  --color-accent-content: #ffffff;
+}
+
+@theme {
+  --color-primary: #7c3aed;
+  --color-secondary: #9333ea;
+  --color-accent: #a855f7;
+}
+
 /* Add cursor pointer to buttons by default - this is coming from tailwind docs */
 @layer base {
   button:not(:disabled),

@@ -12,6 +12,8 @@ import { inngest, functions } from "./lib/inngest.js";
 
 import sessionRoutes from "./routes/sessionRoute.js";
 import { connectRedis, getRedisClient } from "./lib/redis.js";
+import mongoose from "mongoose";
+import Session from "./models/Session.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -24,11 +26,14 @@ const io = new Server(httpServer, {
   },
 });
 
+app.set("io", io);
+
 // socket.io events
 io.on("connection", (socket) => {
   socket.on("join-room", async (roomId) => {
     socket.join(roomId);
     socket.to(roomId).emit("user-joined");
+    io.emit("active-sessions-updated");
 
     // Retrieve active cached code and language state from Redis
     const redisClient = getRedisClient();
@@ -49,6 +54,13 @@ io.on("connection", (socket) => {
     const { roomId } = messageData;
     if (roomId) {
       io.to(roomId).emit("receive-message", messageData);
+    }
+  });
+
+  socket.on("send-ai-message", (messageData) => {
+    const { roomId } = messageData;
+    if (roomId) {
+      io.to(roomId).emit("receive-ai-message", messageData);
     }
   });
 //webrtc events for video call 1->2 offering
@@ -107,6 +119,10 @@ io.on("connection", (socket) => {
         socket.to(room).emit("user-left");
       }
     }
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("active-sessions-updated");
   });
 });
 

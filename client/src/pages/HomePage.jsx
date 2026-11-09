@@ -23,12 +23,12 @@ function HomePage() {
             className="flex items-center gap-3 hover:scale-105 transition-transform duration-200"
           >
             <div className="size-10 rounded-xl bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center shadow-lg">
-              <SparklesIcon className="size-6 text-white" />
+              <ZapIcon className="size-6 text-white" />
             </div>
 
             <div className="flex flex-col">
               <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
-                Talent IQ
+                Synapse
               </span>
               <span className="text-xs text-base-content/60 font-medium -mt-1">Code Together</span>
             </div>
@@ -97,28 +97,12 @@ function HomePage() {
                 Watch Demo
               </button>
             </div>
-
-            {/* STATS */}
-            <div className="stats stats-vertical lg:stats-horizontal bg-base-100 shadow-lg">
-              <div className="stat">
-                <div className="stat-value text-primary">10K+</div>
-                <div className="stat-title">Active Users</div>
-              </div>
-              <div className="stat">
-                <div className="stat-value text-secondary">50K+</div>
-                <div className="stat-title">Sessions</div>
-              </div>
-              <div className="stat">
-                <div className="stat-value text-accent">99.9%</div>
-                <div className="stat-title">Uptime</div>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT IMAGE */}
           <img
             src={heroImg}
-            alt="CodeCollab Platform"
+            alt="Synapse Platform"
             className="w-full h-auto rounded-3xl shadow-2xl border-4 border-base-100 hover:scale-105 transition-transform duration-500"
           />
         </div>

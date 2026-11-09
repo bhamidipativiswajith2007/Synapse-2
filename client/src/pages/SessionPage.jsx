@@ -13,6 +13,7 @@ import OutputPanel from "../components/OutputPanel";
 
 import VideoCallUI from "../components/VideoCallUI";
 import { io } from "socket.io-client";
+import toast from "react-hot-toast";
 
 function SessionPage() {
   const navigate = useNavigate();
@@ -71,6 +72,11 @@ function SessionPage() {
         setCode(incoming.code);
         setIsSynced(true);
       }
+    });
+
+    newSocket.on("session-ended", () => {
+      toast.error("Host has ended the session.");
+      navigate("/dashboard");
     });
 
     return () => {
@@ -161,7 +167,7 @@ function SessionPage() {
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
 
-      <div className="flex-1">
+      <div className="flex-1 min-h-0 overflow-hidden">
         <PanelGroup direction="horizontal">
           {/* LEFT PANEL - CODE EDITOR & PROBLEM DETAILS */}
           <Panel defaultSize={50} minSize={30}>
@@ -318,9 +324,13 @@ function SessionPage() {
 
           {/* RIGHT PANEL - VIDEO CALLS & CHAT */}
           <Panel defaultSize={50} minSize={30}>
-            <div className="h-full bg-base-200 p-4 overflow-auto">
+            <div className="h-full bg-base-200 p-4 overflow-hidden">
               <div className="h-full">
-                <VideoCallUI session={session} />
+                <VideoCallUI
+                  session={session}
+                  code={code}
+                  selectedLanguage={selectedLanguage}
+                />
               </div>
             </div>
           </Panel>
